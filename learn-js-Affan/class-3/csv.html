@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>CSV</title>
+</head>
+<body>
+	<div class="content">
+		<form class="csvForm">
+			<input type="file" name="csv" id="csv">
+			<button type="submit">Submit File</button>
+		</form>
+		<table class="products_table">
+			<thead>
+				<th>Product Code</th>
+				<th>Product Name</th>
+				<th>Product Price</th>
+				<th>Product Image</th>
+			</thead>
+			<tbody id="products_body">
+				
+			</tbody>
+		</table>
+	</div>
+	<style type="text/css">
+		.products_table{
+			border: 1px solid
+		}
+	</style>
+	<script type="text/javascript">
+		document.getElementsByClassName('csvForm')[0].onsubmit = function(e){
+			e.preventDefault();
+			var csvFile = e.target.csv.files[0];
+			//console.log(e.target.csv.files[0]);
+			var reader = new FileReader();
+			reader.readAsText(csvFile);
+			reader.onload = function(a){
+				//console.log(a.target.result)
+				var jsonData = csvToJson(a.target.result)
+				console.log(jsonData)
+				jsonData = JSON.parse(jsonData)
+				var rows = "";
+				jsonData.forEach(function(item,index){
+					console.log(item.Product_img)
+					if(typeof  item.Product_code != 'undefined' || typeof  item.Product_name != 'undefined' || typeof  item.Product_price != 'undefined' || typeof  item.Product_img != 'undefined'){
+						rows += '<tr><td>'+item.Product_code+'</td><td>'+item.Product_name+'</td><td>'+item.Product_price+'</td><td><img src="'+item.Product_img+'" width="200px" height="200px"></td></tr>';
+					}
+				});
+				document.getElementById('products_body').innerHTML = (rows)
+			}
+
+		}
+
+		//JSON/Array Define
+		// var obj = {};
+		// obj['product_code'] = 'x-100'
+		function csvToJson(csvString){
+			var result = [];
+			var lines = csvString.split('\n');
+			var headings = lines[0].split(',')
+			console.log(headings)
+			for(var i = 1; i < lines.length; i++){
+				var obj = {};
+				var record = lines[i].split(',');
+				for(var j = 0; j<record.length;j++){
+					obj[headings[j]] = record[j];
+				}
+				result.push(obj)
+			}
+		return JSON.stringify(result).replace(/\\r/g,'');
+		}
+	</script>
+</body>
+</html>

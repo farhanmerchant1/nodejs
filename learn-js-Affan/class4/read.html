@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>READ JSON</title>
+	
+</head>
+<body>
+	<div id="content" style="text-align: center;">
+		
+	</div>
+	<script type="text/javascript">
+		//var xy = {};
+		//var xy,z,za;
+		// console.log(typeof xy)
+		// function run(){
+		// 	var xy
+		// 	console.log(xy)
+			
+		// }
+		// run()
+
+		var json = {"name":"John","Class":12};
+		Object.entries(json).forEach(function(item,index){
+			console.log("Key->"+item[0]+"  Value->"+item[1])
+		})
+		var jsonhtml = {
+			"h2":"Class",
+			"p":"Blockchain",
+			"div":[
+			{"h2":"ProductsCount","p":"13"},
+			{"h2":"Sold","p":"3"}
+			]
+		};
+		// Object.entries(jsonhtml).forEach(function(item,index){
+		// 	var first = document.createElement(item[0])
+		// 	first.innerText = item[1]
+		// 	document.getElementById('content').append(first)
+		// })
+		Object.entries(jsonhtml).forEach(function([key,value],index){
+			console.log(typeof value)
+			if(typeof value == 'object'){
+				var underdiv = document.createElement(key)
+				console.log(typeof value.length)
+				if(typeof value.length != 'undefined'){
+					value.forEach(function(item2,index2){
+						Object.entries(item2).forEach(function([key2,value2],index2){
+							var first = document.createElement(key2)
+							first.innerText = value2
+							//document.getElementById('content').append(first)
+							underdiv.append(first)	
+						})
+					})
+					document.getElementById('content').append(underdiv)
+				}else{
+					Object.entries(value).forEach(function([key,value1],index1){
+						var first = document.createElement(key1)
+						first.innerText = value1
+						underdiv.append(first)	
+					})
+					document.getElementById('content').append(underdiv)
+				}
+				//console.log(JSON.stringify(value))
+					
+			}else{
+				var first = document.createElement(key)
+				first.innerText = value
+				document.getElementById('content').append(first)
+			}
+		})
+	</script>
+</body>
+</html>

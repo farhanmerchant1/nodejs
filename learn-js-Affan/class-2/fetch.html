@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Fetch</title>
+</head>
+<body>
+	<input type="file" name="json" id="json">
+	<div id="jsonData"></div>
+	<button>check</button>
+	<script type="text/javascript">
+		document.getElementById('json').onchange = function(e){
+			console.log(e.target.files[0])
+			var xfile = e.target.files[0]
+			var read = new FileReader();
+			read.readAsText(xfile)
+			read.onload = function(e1){
+				var json1 = (e1.target.result);
+				console.log(json1)
+				// json1 = (JSON.parse(json1))
+				// var first = document.createElement('h1')
+				// first.innerText = json1.h1
+				// var second = document.createElement('p')
+				// second.innerText = json1.p
+				// document.getElementById('jsonData').append(first)
+				// document.getElementById('jsonData').append(second)
+				
+			}
+
+		}
+	</script>
+</body>
+</html>
