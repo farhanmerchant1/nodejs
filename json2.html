@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JSON</title>
+</head>
+<body>
+	<style type="text/css">
+		#json1{
+			text-align: center;
+		}
+	</style>
+	<h1>JSON</h1>
+	<div id="json1">
+		<h2>Total Cases:</h2>
+		<span id="t_cases"></span>
+		<h2>Total Deaths:</h2>
+		<span id="t_deaths"></span>
+		<table style="padding: 55px">
+			<thead>
+				<th>Country</th>
+				<th>Cases</th>
+				<th>Recovered</th>
+			</thead>
+			<tbody id="table-content">
+				
+			</tbody>
+		</table>
+	</div>
+            <div id="form">
+                <button id="make_json" onclick="makeJSON()">Make JSON</button>
+                <button id="changeIt" onclick="changeIt()">Change It</button><br></br>
+            <input type="text" id="id" name="id" placeholder="Enter ID">
+            <input type="text"  id="name" name="name" placeholder="Enter Name">
+            <input type="text" id="city" name="city" placeholder="Enter Country">
+            <input type="text"  id="address" name="address" placeholder="Enter Address">
+    
+    </div>
+	<script type="text/javascript">
+		function isJSON(json){
+			try{
+				JSON.parse(json);
+				return true;
+			}catch(e){
+				return false;
+			}
+		}
+		var first = '[{"id":1,"name":"a"},{"id":2,"name":"ad"},{"id":3,"name":"af"},{"id":4,"name":"adsf"}]';
+
+
+		var multi_data = {'total_cases':'3000000','total_deaths':'10000',
+        'list_countries':[{'country':'India','cases':'1000000','deaths':'1000','recovered':'90000'},
+        {'country':'USA','cases':'1000000','deaths':'1000','recovered':'90000'},
+        {'country':'Italy','cases':'222222','deaths':'1000','recovered':'90000'},
+        {'country':'France','cases':'1000000','deaths':'1000','recovered':'90000'}]};
+		
+		document.getElementById('t_cases').innerHTML = multi_data.total_cases
+		document.getElementById('t_deaths').innerHTML = multi_data.total_deaths
+		if(isJSON(JSON.stringify(multi_data.list_countries))){
+			//var data = JSON.parse(first);
+			var content = '';
+			multi_data.list_countries.forEach(function(item,index){
+				if(item.country != 'xxtaly'){
+					content += '<tr><td>'+item.country+'</td><td>'+item.cases+'</td><td>'+item.recovered+'</td></tr>'
+				}
+				
+			})
+			document.getElementById('table-content').innerHTML = content
+		}else{
+			console.log('Bad Response')
+		}
+
+		function makeJSON(){
+			var id = document.getElementById('id').value
+			var name = document.getElementById('name').value
+			var city = document.getElementById('city').value
+			var address = document.getElementById('address').value
+			var json1 = [];
+			json1.push({"id":id,"name":name,"city":city})
+			console.log(json1)
+		}
+            function changeIt() {
+                for (i=1;i<=4;i++){
+                    var textEl = document.getElementById("form");
+            var input = document.createElement("input");
+            input.type = 'text';
+            input.id='id';
+            input.placeholder='Enter ID';
+            textEl.appendChild(input);
+
+                }
+            
+        }
+
+
+		
+		//console.log(isJSON(first));
+	</script>
+</body>
+</html>
